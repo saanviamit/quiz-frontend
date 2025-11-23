@@ -51,7 +51,7 @@ export default function Quiz() {
     if (!text) return;
 
     try {
-      const res = await fetch("https://web-production-4aba1.up.railway.app/tts", {
+      const res = await const res = await fetch("https://quiz-backend-production-4227.up.railway.app/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text, voice }),
@@ -68,7 +68,8 @@ export default function Quiz() {
   const fetchQuestions = async () => {
     setLoading(true);
 
-    const res = await fetch("https://web-production-4aba1.up.railway.app/generate-questions", {
+    const res = await const res = await fetch("https://quiz-backend-production-4227.up.railway.app/generate-questions", {
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ topic, language, count }),
