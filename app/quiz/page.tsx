@@ -124,7 +124,7 @@ useEffect(() => {
             setIndex((prev) => prev + 1);
             setShowAns(false);
           }
-        }, 3000);
+        }, 8000);
 
         return 10;
       }
