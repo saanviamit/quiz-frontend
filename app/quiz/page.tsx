@@ -46,44 +46,46 @@ export default function Quiz() {
       ? localStorage.getItem("voice") || "alloy"
       : "alloy";
 
-  // ========== FINAL FIXED SPEAK FUNCTION ==========
-  const speak = async (text: string) => {
-    if (!text) return;
+// ========== FINAL FIXED SPEAK FUNCTION ==========
+const speak = async (text: string) => {
+  if (!text) return;
 
-    try {
-      const res = await const res = await fetch("https://terrific-love-production.up.railway.app", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, voice }),
-      });
-
-      const data = await res.json();
-      if (data.audio) playBase64Audio(data.audio);
-    } catch (err) {
-      console.log("TTS ERROR:", err);
-    }
-  };
-
-  // ========== FETCH QUESTIONS ==========
-  const fetchQuestions = async () => {
-    setLoading(true);
-
-    const res = await const res = await fetch("https://terrific-love-production.up.railway.app/generate-questions", {
-
+  try {
+    const res = await fetch("https://terrific-love-production.up.railway.app/tts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topic, language, count }),
+      body: JSON.stringify({ text, voice }),
     });
 
     const data = await res.json();
-    const parsed = parseQuestions(data.raw);
+    if (data.audio) playBase64Audio(data.audio);
+  } catch (err) {
+    console.log("TTS ERROR:", err);
+  }
+};
 
-    setQuestions(parsed);
-    setLoading(false);
+  // ========== FETCH QUESTIONS ==========
+const fetchQuestions = async () => {
+  setLoading(true);
 
-    // Speak first question
-    speak(parsed[0].question);
-  };
+  const res = await fetch(
+    "https://terrific-love-production.up.railway.app/generate-questions",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic, language, count }),
+    }
+  );
+
+  const data = await res.json();
+  const parsed = parseQuestions(data.raw);
+
+  setQuestions(parsed);
+  setLoading(false);
+
+  // Speak first question
+  speak(parsed[0].question);
+};
 
   useEffect(() => {
     fetchQuestions();
