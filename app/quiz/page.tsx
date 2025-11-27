@@ -47,22 +47,11 @@ export default function Quiz() {
       : "alloy";
 
 // ========== FINAL FIXED SPEAK FUNCTION ==========
-const speak = async (text: string) => {
-  if (!text) return;
-
-  try {
-    const res = await fetch("https://terrific-love-production.up.railway.app/tts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, voice }),
-    });
-
-    const data = await res.json();
-    if (data.audio) playBase64Audio(data.audio);
-  } catch (err) {
-    console.log("TTS ERROR:", err);
-  }
+const speak = (text: string) => {
+  // Disabled TTS to avoid API costs
+  console.log("[TTS DISABLED] Would speak:", text);
 };
+
 
   // ========== FETCH QUESTIONS ==========
 const fetchQuestions = async () => {
